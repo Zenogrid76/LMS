@@ -64,15 +64,11 @@ export default function TestimonialsSection() {
               <div className="mb-2 text-gray-800">{t.text}</div>
               <div className="flex gap-4 text-gray-500 text-sm">
                 <span className="flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 9l-5 5-5-5" />
-                  </svg>
+                  <img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/facebook-like--v1.png" alt="like"/>
                   {t.likes}
                 </span>
                 <span className="flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 15l5-5 5 5" />
-                  </svg>
+                  <img width="15" height="15" className="rotate-180" rotate src="https://img.icons8.com/ios-glyphs/30/facebook-like--v1.png" alt="like"/>
                   {t.dislikes}
                 </span>
               </div>

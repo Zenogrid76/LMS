@@ -1,23 +1,28 @@
 import React from "react";
-import { Routes, Route, BrowserRouter as Router  } from "react-router-dom";
-import Home from "./components/pages/Home/Home"; // adjust path as needed
-import Header from "./components/common/Header/Header"; // if you use Header here
-import Footer from "./components/common/Footer/Footer"; // if you use Footer here
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Home from "./components/pages/Home/Home";
+import Header from "./components/common/Header/Header";
+import Footer from "./components/common/Footer/Footer";
+import Login from "./components/pages/Auth/Login";
+import Register from "./components/pages/Auth/Registration/Register"; // Assuming Register is similar to Login
+import StudentRegister from "./components/pages/Auth/Registration/StudentRegister";
+import Courses from "./components/pages/Courses/Courses";
 
 function App() {
   return (
-    <>
-      {/* If you want the header on every page, put it here */}
+    <BrowserRouter>
       <Header />
-      <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} /> {/* Assuming Register is similar to Login */}
+        <Route path="/register/student" element={<StudentRegister />} /> {/* Redirect to Student Registration */}
+        <Route path="/courses" element={<Courses /> } />
         {/* Add more routes as needed */}
       </Routes>
-       </Router>
-       <Footer />
-    </>
+      <Footer />
+    </BrowserRouter>
   );
 }
 

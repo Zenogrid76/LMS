@@ -9,7 +9,7 @@ import FAQSection from "./FAQSection";
 
 function Home() {
   return ( 
-    <div className="bg-[#F8F9FB] min-h-screen">
+    <div className="bg-[#F8F9FB] min-h-screen flex flex-col w-full flex-2 font-lexend">
       <HeroBanner />
       <PopularCoursesSection />
       <BestTeachersSection />
@@ -22,4 +22,3 @@ function Home() {
   );
 }
 export default Home;
-// This Home component is a simple landing page with a gradient background, a title, a description, and a button.
