@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* Only include global resets you really need! */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* If you want a default background, use Tailwind in your JSX:
+   <div className="bg-white min-h-screen">...</div>
+*/
+
+/* Remove or comment out the rest of the default Vite styles
+   to avoid conflicts with Tailwind. */

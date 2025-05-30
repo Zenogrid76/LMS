@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Transform Your Learning Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="src/pages/index.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2DD4BF',
+                        'primary-dark': '#14B8A6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-gray-900">LMS</h1>
+                    </div>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-900 hover:text-primary transition-colors">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors">Mentors</a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors">Courses</a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors">My Courses</a>
+                </nav>
+                
+                <!-- Auth Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors">
+                        Register
+                    </button>
+                    <button class="text-gray-600 hover:text-gray-900 transition-colors">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div>
+                    <h1 class="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        Transform Your Learning Experience
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        Our platform offers a comprehensive suite of tools and resources designed to enhance the learning journey for both mentors and students. Connect with experts, access a wide range of courses, and track your progress effectively.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-primary text-white px-8 py-3 rounded-lg hover:bg-primary-dark transition-colors font-medium">
+                            Find Course
+                        </button>
+                        <button class="border border-gray-300 text-gray-700 px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                            Find Mentor
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Right Illustration -->
+                <div class="relative">
+                    <div class="hero-illustration bg-primary rounded-2xl p-8 relative overflow-hidden">
+                        <div class="relative z-10">
+                            <div class="w-32 h-32 bg-white rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <div class="w-24 h-24 bg-gray-200 rounded-full"></div>
+                            </div>
+                        </div>
+                        <!-- Educational icons background -->
+                        <div class="absolute inset-0 education-icons"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Courses Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-12">Most Popular Courses Right Now</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Course Card 1 -->
+                <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="h-48 bg-blue-100 rounded-t-xl"></div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-gray-900 mb-2">Mathematics Fundamentals</h3>
+                        <p class="text-sm text-gray-600">Dr. Eleanor Harper</p>
+                    </div>
+                </div>
+                
+                <!-- Course Card 2 -->
+                <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="h-48 bg-gray-900 rounded-t-xl"></div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-gray-900 mb-2">Introduction to Programming</h3>
+                        <p class="text-sm text-gray-600">Prof. Samuel Bennett</p>
+                    </div>
+                </div>
+                
+                <!-- Course Card 3 -->
+                <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="h-48 bg-green-800 rounded-t-xl"></div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-gray-900 mb-2">Advanced Science Concepts</h3>
+                        <p class="text-sm text-gray-600">Dr. Olivia Carter</p>
+                    </div>
+                </div>
+                
+                <!-- Course Card 4 -->
+                <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div class="h-48 bg-gray-700 rounded-t-xl"></div>
+                    <div class="p-6">
+                        <h3 class="font-semibold text-gray-900 mb-2">Data Analysis Techniques</h3>
+                        <p class="text-sm text-gray-600">Prof. Ethan Walker</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Mentors Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-12">Choose From Our Best</h2>
+            
+            <div class="space-y-6">
+                <!-- Mentor 1 -->
+                <div class="flex items-center justify-between p-6 bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-orange-200 rounded-full"></div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Dr. Eleanor Harper</h3>
+                            <p class="text-gray-600 text-sm mb-1">Dr. Eleanor Harper is a renowned expert in mathematics and physics with over 15 years of teaching experience.</p>
+                            <p class="text-primary text-sm font-medium">Expertise: Mathematics, Physics</p>
+                        </div>
+                    </div>
+                    <button class="text-primary hover:text-primary-dark font-medium">View Profile</button>
+                </div>
+                
+                <!-- Mentor 2 -->
+                <div class="flex items-center justify-between p-6 bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-blue-200 rounded-full"></div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Prof. Samuel Bennett</h3>
+                            <p class="text-gray-600 text-sm mb-1">Prof. Samuel Bennett is an experienced computer science professor specializing in software engineering and algorithm design.</p>
+                            <p class="text-primary text-sm font-medium">Expertise: Computer Science, Software Engineering</p>
+                        </div>
+                    </div>
+                    <button class="text-primary hover:text-primary-dark font-medium">View Profile</button>
+                </div>
+                
+                <!-- Mentor 3 -->
+                <div class="flex items-center justify-between p-6 bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-pink-200 rounded-full"></div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Dr. Olivia Carter</h3>
+                            <p class="text-gray-600 text-sm mb-1">Dr. Olivia Carter is a leading researcher in biology and chemistry, known for her innovative teaching methods.</p>
+                            <p class="text-primary text-sm font-medium">Expertise: Biology, Chemistry</p>
+                        </div>
+                    </div>
+                    <button class="text-primary hover:text-primary-dark font-medium">View Profile</button>
+                </div>
+                
+                <!-- Mentor 4 -->
+                <div class="flex items-center justify-between p-6 bg-gray-50 rounded-xl">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-green-200 rounded-full"></div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Prof. Ethan Walker</h3>
+                            <p class="text-gray-600 text-sm mb-1">Prof. Ethan Walker is an expert in statistics and data science, with a focus on practical applications of data analysis.</p>
+                            <p class="text-primary text-sm font-medium">Expertise: Statistics, Data Science</p>
+                        </div>
+                    </div>
+                    <button class="text-primary hover:text-primary-dark font-medium">View Profile</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-12">See what others are saying</h2>
+            
+            <div class="space-y-6">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-purple-200 rounded-full"></div>
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <h4 class="font-semibold text-gray-900">Sophia Clark</h4>
+                                <span class="text-gray-500 text-sm">2 months ago</span>
+                            </div>
+                            <div class="flex text-yellow-400 mb-3">
+                                <span>★★★★★</span>
+                            </div>
+                            <p class="text-gray-700 mb-4">This platform has transformed my learning experience! The mentors are incredibly knowledgeable and supportive.</p>
+                            <div class="flex items-center space-x-4 text-gray-500">
+                                <button class="flex items-center space-x-1 hover:text-primary">
+                                    <span>👍</span>
+                                    <span>12</span>
+                                </button>
+                                <button class="flex items-center space-x-1 hover:text-primary">
+                                    <span>👎</span>
+                                    <span>2</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-blue-200 rounded-full"></div>
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <h4 class="font-semibold text-gray-900">Liam Foster</h4>
+                                <span class="text-gray-500 text-sm">3 months ago</span>
+                            </div>
+                            <div class="flex text-yellow-400 mb-3">
+                                <span>★★★★☆</span>
+                            </div>
+                            <p class="text-gray-700 mb-4">I've learned so much from the courses offered here. The content is well-structured and engaging.</p>
+                            <div class="flex items-center space-x-4 text-gray-500">
+                                <button class="flex items-center space-x-1 hover:text-primary">
+                                    <span>👍</span>
+                                    <span>8</span>
+                                </button>
+                                <button class="flex items-center space-x-1 hover:text-primary">
+                                    <span>👎</span>
+                                    <span>1</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-green-200 rounded-full"></div>
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <h4 class="font-semibold text-gray-900">Ava Bennett</h4>
+                                <span class="text-gray-500 text-sm">4 months ago</span>
+                            </div>
+                            <div class="flex text-yellow-400 mb-3">
+                                <span>★★★★★</span>
+                            </div>
+                            <p class="text-gray-700 mb-4">The community is fantastic, and the resources are top-notch. Highly recommend!</p>
+                            <div class="flex items-center space-x-4 text-gray-500">
+                                <button class="flex items-center space-x-1 hover:text-primary">
+                                    <span>👍</span>
+                                    <span>15</span>
+                                </button>
+                                <button class="flex items-center space-x-1 hover:text-primary">
+                                    <span>👎</span>
+                                    <span>3</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-12">Frequently Asked Questions</h2>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button class="w-full flex justify-between items-center p-6 text-left hover:bg-gray-50" onclick="toggleFAQ(1)">
+                        <span class="font-semibold text-gray-900">How do I find a mentor?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" id="arrow-1">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                    <div class="hidden px-6 pb-6" id="content-1">
+                        <p class="text-gray-600">You can browse our mentor directory, filter by expertise, and view their profiles to find the perfect match for your learning goals.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button class="w-full flex justify-between items-center p-6 text-left hover:bg-gray-50" onclick="toggleFAQ(2)">
+                        <span class="font-semibold text-gray-900">What courses are available?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" id="arrow-2">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                    <div class="hidden px-6 pb-6" id="content-2">
+                        <p class="text-gray-600">We offer a wide range of courses across various subjects including mathematics, programming, science, and data analysis.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button class="w-full flex justify-between items-center p-6 text-left hover:bg-gray-50" onclick="toggleFAQ(3)">
+                        <span class="font-semibold text-gray-900">How does the platform support collaboration?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" id="arrow-3">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                    <div class="hidden px-6 pb-6" id="content-3">
+                        <p class="text-gray-600">Our platform includes live classes, interactive whiteboards, real-time chat, and AI-powered learning assistance to enhance collaboration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center space-x-8 mb-8">
+                <a href="#" class="text-gray-300 hover:text-white transition-colors">About Us</a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors">Contact</a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors">Terms of Service</a>
+            </div>
+            <div class="text-center text-gray-400">
+                <p>&copy; 2025 LMS. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
