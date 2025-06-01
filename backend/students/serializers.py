@@ -24,7 +24,7 @@ class StudentsSerializer(serializers.ModelSerializer):
     # Validate email - moved OUTSIDE the Meta class
     def validate_email(self, value):
         if Students.objects.filter(email=value).exists():
-            raise serializers.ValidationError("Email already exists. Please sign in.\n")
+            raise serializers.ValidationError("Email already exists. Please sign in.")
         return value
     
     # Validate password - moved OUTSIDE the Meta class
@@ -50,5 +50,5 @@ class StudentsSerializer(serializers.ModelSerializer):
         if value > today.replace(year=today.year - 14):
             raise serializers.ValidationError("You must be at least 14 years old to register.")
         return value
-        
+    
     

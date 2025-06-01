@@ -17,3 +17,4 @@ class StudentsListView(APIView):
         students = Students.objects.all()
         serializer = StudentsSerializer(students, many=True)
         return Response(serializer.data)
+

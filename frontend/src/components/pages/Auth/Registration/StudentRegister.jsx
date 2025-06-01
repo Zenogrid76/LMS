@@ -106,6 +106,8 @@ export default function StudentRegister() {
     setError("");
     setSuccess("");
 
+    
+
     // Prepare form data for file upload
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
@@ -130,6 +132,13 @@ export default function StudentRegister() {
     } catch (err) {
       let message =
         "Registration failed. Please check your input and try again.";
+      // Handle specific error messages from the server
+      if (err.response?.status === 400) {
+        message = "Invalid input. Please check your data.";
+      } else if (err.response?.status === 409) {
+        message = "Email already exists. Please use a different email.";
+      } else if (err.response?.status === 500) {
+        message = "Server error. Please try again later.";}
 
       if (err.response?.data) {
         // If it's a string (rare, but possible)
@@ -142,7 +151,7 @@ export default function StudentRegister() {
           message = Object.values(err.response.data).flat().join(" ");
         }
       }
-
+      
       setError(message);
       setSuccess("");
     }
