@@ -17,4 +17,12 @@ class StudentsListView(APIView):
         students = Students.objects.all()
         serializer = StudentsSerializer(students, many=True)
         return Response(serializer.data)
-
+    
+class StudentDeleteView(APIView):
+    def delete(self, request, studentid):
+        try:
+            student = Students.objects.get(studentid=studentid)
+            student.delete()
+            return Response({"detail": "Student deleted."}, status=status.HTTP_204_NO_CONTENT)
+        except Students.DoesNotExist:
+            return Response({"detail": "Student not found."}, status=status.HTTP_404_NOT_FOUND)

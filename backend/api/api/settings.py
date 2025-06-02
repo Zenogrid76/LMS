@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'students',  # Your app for student management
+    'students',  
     'rest_framework',  # Django REST Framework for API support
     'corsheaders',  # For handling CORS
     'django.contrib.sites',  # For flatpages and sites framework
