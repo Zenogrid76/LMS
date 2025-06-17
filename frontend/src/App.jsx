@@ -8,6 +8,7 @@ import Register from "./components/pages/Auth/Registration/Register"; // Assumin
 import StudentRegister from "./components/pages/Auth/Registration/StudentRegister";
 import Courses from "./components/pages/Courses/Courses";
 import Admin from "./components/pages/Admin/admin";
+import Mentorreg from "./components/pages/Auth/Registration/Mentorregister/Mtcoreprofile"; // Mentor registration page
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
         <Route path="/register/student" element={<StudentRegister />} /> {/* Redirect to Student Registration */}
         <Route path="/courses" element={<Courses /> } />
         <Route path="/admin" element={<Admin />} />
-        
+        <Route path="/register/mentor" element={<Mentorreg />} /> {/* Mentor registration page */}
+
       </Routes>
       <Footer />
     </BrowserRouter>

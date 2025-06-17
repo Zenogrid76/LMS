@@ -1,5 +1,4 @@
 import React from "react";
-import StudentRegister from "./StudentRegister";
 
 export default function Register() {
     return (
@@ -48,7 +47,7 @@ export default function Register() {
                                 <div className="flex flex-1 gap-3 flex-wrap px-4 py-3 max-w-[480px] justify-center">
                                     <button
                                         className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#1FDEAB] text-[#101816] text-sm font-bold leading-normal tracking-[0.015em] grow"
-                                    // onClick={...} // Add your navigation handler here
+                                        onClick={() => window.location.href = '/register/mentor'} // Redirect to Mentor Registration
                                     >
                                         <span className="truncate">Register as Mentor</span>
                                     </button>

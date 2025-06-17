@@ -29,7 +29,7 @@ export default function PopularCoursesSection() {
       <h2 className="text-2xl font-bold mb-6">Most Popular Courses Right Now</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 items-stretch ">
         {courses.map((course) => (
-          <div key={course.title} className="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col hover:scale-110 + transition">
+          <div key={course.title} className="bg-white rounded-xl shadow-sm overflow-hidden flex flex-col hover:scale-110 + transition drop">
             <img src={course.image} alt={course.title} className="w-full h-50 object-cover" />
             <div className="p-4">
               <div className="font-semibold text-base">{course.title}</div>
