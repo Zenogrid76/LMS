@@ -21,5 +21,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.students.urls')),  # Include the students app URLs
+    path('api/students/', include('api.students.urls')),
+    path('api/mentors/', include('api.mentors.urls')),
 ]

@@ -1,21 +1,27 @@
-import React, { useState } from "react";
-import timezonesData from "../../../../common/Data/timezones.json"; // Adjust the path as necessary
-import AvatarUploader from "../../../../common/Form/AvatarUploader"; // Assuming you have an AvatarUploader component
-import FormField from "../../../../common/Form/Formfield"; // Assuming you have a reusable FormField component
+import React, { useState , useEffect } from "react";
+import timezonesData from "../../../../common/Data/timezones.json";
+import AvatarUploader from "../../../../common/Form/AvatarUploader";
+import FormField from "../../../../common/Form/Formfield";
 import axios from "axios";
 
-const timezones = timezonesData.timezones; // Assuming timezones.json has a 'name' field for each timezone
+
+const timezones = timezonesData.timezones;
 
 const MtCoreprofile = ({ onNext }) => {
+
+  const API_URL = import.meta.env.VITE_API_URL;
   const [form, setForm] = useState({
     name: "",
     photo: null,
     email: "",
+    password: "",
+    confirmPassword: "",
     phone: "",
     timezone: "",
     bio: "",
   });
 
+  
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -25,52 +31,6 @@ const MtCoreprofile = ({ onNext }) => {
     }));
   };
 
- const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      // Convert photo blob to File if needed
-      const formData = new FormData();
-      formData.append('name', form.name);
-      formData.append('email', form.email);
-      formData.append('phone', form.phone);
-      formData.append('timezone', form.timezone);
-      formData.append('bio', form.bio);
-      
-      if (form.photo) {
-        formData.append('photo', form.photo, 'profile.jpg');
-      }
-        if (form.password !== form.confirmPassword) {
-    alert("Passwords don't match!");
-    return;
-  }
-  
-  if (form.password.length < 8) {
-    alert("Password must be at least 8 characters");
-    return;
-  }
-
-      // Send to Django backend
-      const response = await axios.post(
-        '/api/mentor/signup/step1/',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-
-      console.log('Step 1 saved:', response.data);
-      onNext(form); // Proceed to next step
-    } catch (error) {
-      console.error('Submission failed:', error.response?.data || error.message);
-      // Show error to user
-    }
-  };
-
-
-
   const [preview, setPreview] = useState(null);
 
   const handleImageChange = (blob) => {
@@ -78,29 +38,64 @@ const MtCoreprofile = ({ onNext }) => {
       ...prev,
       photo: blob,
     }));
-
-    // Optional: Create preview URL
     setPreview(URL.createObjectURL(blob));
   };
 
-  useEffect(() => {
-  async function fetchSavedData() {
-    const sessionId = localStorage.getItem('signupSessionId');
-    if (sessionId) {
-      const response = await axios.get(`/api/mentor/signup/session/${sessionId}/`);
-      if (response.data.step1_data) {
-        setForm(response.data.step1_data);
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validate passwords before sending to backend
+    if (form.password !== form.confirmPassword) {
+      alert("Passwords don't match!");
+      return;
     }
-  }
-  fetchSavedData();
-}, []);
+    if (!form.password || form.password.length < 8) {
+      alert("Password must be at least 8 characters");
+      return;
+    }
 
+    try {
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("email", form.email);
+      formData.append("password", form.password); // Send password
+      formData.append("phone", form.phone);
+      formData.append("timezone", form.timezone);
+      formData.append("bio", form.bio);
 
+      if (form.photo) {
+        formData.append("photo", form.photo); // Let backend handle filename
+      }
+
+      // Send to Django backend
+      const response = await axios.post(`${API_URL}/api/mentors/signup/step1/`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("Step 1 saved:", response.data);
+
+      // Clear sensitive data
+      setForm(prev => ({
+        ...prev,
+        password: "",
+        confirmPassword: ""
+      }));
+
+      // Proceed to next step (do NOT pass form with password)
+      onNext();
+    } catch (error) {
+      console.error(
+        "Submission failed:",
+        error.response?.data || error.message
+      );
+      // Show error to user
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F7FAFA] font-['Lexend']">
-      {/* Main Form */}
       <main className="flex flex-col items-center py-8">
         <div className="w-full max-w-4xl">
           {/* Progress Bar */}
@@ -138,9 +133,9 @@ const MtCoreprofile = ({ onNext }) => {
               onChange={handleChange}
             />
 
-            {/* Profile Photo - Replaced with AvatarUploader */}
-            <div className="w-full max-w-xl flex flex-col gap-2 ">
-              <label className="text-base font-medium text-[#0D1C17] ">
+            {/* Profile Photo */}
+            <div className="w-full max-w-xl flex flex-col gap-2">
+              <label className="text-base font-medium text-[#0D1C17]">
                 Profile Photo
               </label>
               <AvatarUploader onImageChange={handleImageChange} />
@@ -166,26 +161,27 @@ const MtCoreprofile = ({ onNext }) => {
               onChange={handleChange}
             />
 
-            // Add password fields after email field
-<FormField
-  label="Password"
-  name="password"
-  type="password"
-  placeholder="Enter your password"
-  value={form.password}
-  onChange={handleChange}
-  required
-/>
+            {/* Password */}
+            <FormField
+              label="Password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
 
-<FormField
-  label="Confirm Password"
-  name="confirmPassword"
-  type="password"
-  placeholder="Confirm your password"
-  value={form.confirmPassword}
-  onChange={handleChange}
-  required
-/>
+            {/* Confirm Password */}
+            <FormField
+              label="Confirm Password"
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirm your password"
+              value={form.confirmPassword}
+              onChange={handleChange}
+              required
+            />
 
             {/* Phone Number */}
             <FormField
