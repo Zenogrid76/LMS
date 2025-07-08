@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../../common/Header/Header"
 import PopularCoursesSection from "./PopularCoursesSection";
 import BestTeachersSection from "./BestTeachersSection";
 import HeroBanner from "./HeroBanner";

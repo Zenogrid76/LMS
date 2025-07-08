@@ -1,7 +1,5 @@
 import React from "react";
 import logo from '../../../../../Assets/logo.png';
-import Login from "../../pages/Auth/Login"; // Adjust the path as needed
-import Register from "../../pages/Auth/Registration/Register"; // Adjust the path as needed
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import Home from "../../pages/Home/Home"; // Adjust the path as needed
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom"; // Import necessary components for routing
