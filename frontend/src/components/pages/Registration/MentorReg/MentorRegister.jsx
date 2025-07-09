@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../pages/Auth/AuthContext'; // Adjust the import path as needed
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
 export default function MentorRegister() {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
 
   const [formData, setFormData] = useState({
     username: '',
@@ -55,6 +58,7 @@ export default function MentorRegister() {
         const data = await response.json();
         localStorage.setItem('access_token', data.access);
         localStorage.setItem('refresh_token', data.refresh);
+        login(data.access); // Assuming you have a login function to set auth state
         navigate('/mentor/application/step1');
       } else {
         const errorData = await response.json();

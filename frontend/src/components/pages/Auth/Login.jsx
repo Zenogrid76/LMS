@@ -1,63 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import api from "../../common/Api/api"; // <-- Your custom Axios instance
-import { useAuth } from "../../pages/Auth/AuthContext"; // <-- Your AuthContext
+import api from "../../common/Api/api";
+import { useAuth } from "../../pages/Auth/AuthContext";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 export default function Login() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { login } = useAuth(); // <-- Get login from context
+  const { login } = useAuth();
   const [message, setMessage] = useState("");
   const [form, setForm] = useState({ identifier: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // Only clear the "message" (not loginError) after a timeout
   useEffect(() => {
     if (location.state?.message) {
       setMessage(location.state.message);
       navigate(location.pathname, { replace: true, state: {} });
-      setTimeout(() => {
-        setMessage("");
-      }, 2000);
+      setTimeout(() => setMessage(""), 2000);
     }
   }, [location, navigate]);
 
+  // Only clear loginError on input change
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setLoginError("");
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setLoginError("");
-    try {
-      // Login using email (or username if your backend supports it)
-      const loginRes = await api.post(`/api/users/login/`, {
-        email: form.identifier,
-        password: form.password,
-      });
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setLoginError("");
+  try {
+    const loginRes = await api.post(`/api/users/login/`, {
+      email: form.identifier,
+      password: form.password,
+    });
 
-      const data = loginRes.data;
+    const data = loginRes.data;
+    localStorage.setItem("access_token", data.access);
+    localStorage.setItem("refresh_token", data.refresh);
+    login(data.access);
 
-      // Store JWT tokens and update context
-      localStorage.setItem("access_token", data.access);
-      localStorage.setItem("refresh_token", data.refresh);
-      login(data.access); // <-- This will update context and header
+    const user = data.user; // Make sure this is returned by your backend
 
-      // Fetch mentor profile (returns a single object)
-      const profileRes = await api.get(`/api/mentors/profiles/`, {
-        headers: { Authorization: `Bearer ${data.access}` },
-      });
-
-      const mentorProfiles = profileRes.data;
-      const mentor = mentorProfiles[0];
-
-      if (mentor) {
-        if (!mentor.is_onboarding_complete) {
+    if (user.is_mentor) {
+      // Mentor: handle mentor onboarding/dashboard only
+      try {
+        const profileRes = await api.get(`/api/mentors/profiles/`, {
+          headers: { Authorization: `Bearer ${data.access}` },
+        });
+        const mentorProfiles = profileRes.data;
+        const mentor = mentorProfiles && mentorProfiles.length > 0 ? mentorProfiles[0] : null;
+        if (mentor && !mentor.is_onboarding_complete) {
           switch (mentor.onboarding_step) {
             case 1:
               navigate("/mentor/application/step1");
@@ -74,24 +71,43 @@ export default function Login() {
         } else {
           navigate("/mentor/dashboard");
         }
-      } else {
-        navigate("/student/dashboard");
+      } catch {
+        navigate("/mentor/dashboard");
       }
-    } catch (err) {
-      if (err.response && err.response.data && err.response.data.detail) {
-        setLoginError(err.response.data.detail);
-      } else {
-        setLoginError("An unexpected error occurred. Please try again.");
+    } else if (user.is_student) {
+      // Student only: check student profile
+      try {
+        const studentRes = await api.get(`/api/students/me/`, {
+          headers: { Authorization: `Bearer ${data.access}` },
+        });
+        const student = studentRes.data;
+        if (!student.profile_completed) {
+          navigate("/register/student/step1");
+        } else {
+          navigate("/student/dashboard");
+        }
+      } catch {
+        navigate("/register/student/step1");
       }
+    } else {
+      // Default fallback
+      navigate("/");
     }
-    setLoading(false);
-  };
+  } catch (err) {
+    if (err.response && err.response.data && err.response.data.detail) {
+      setLoginError(err.response.data.detail);
+    } else {
+      setLoginError("An unexpected error occurred. Please try again.");
+    }
+  }
+  setLoading(false);
+};
+
+
 
   return (
     <div className="min-h-.8 flex flex- bg-[#f8fbfb] font-lexend">
-      {/* Main Content */}
       <div className="flex flex-1 w-fit justify-center gap-1 pl-6 py-5">
-        {/* Left: Banner */}
         <div className="flex flex-1 max-w-2xl flex-col justify-end shadow-lg">
           <div
             className="flex min-h-[800px] w-full flex-col justify- overflow-visible bg-[#f8fbfb] bg-cover bg-center bg-no-repeat rounded-xl"
@@ -101,16 +117,10 @@ export default function Login() {
             }}
           ></div>
         </div>
-        {/* Right: Login Form */}
         <div className="flex w-xl flex-col justify-center rounded-xl bg-white shadow-lg">
-          {/* Temporary Message */}
           {message && (
             <div className="mx-4 mt-4 p-3 bg-blue-50 border border-blue-200 text-blue-600 rounded-lg text-sm flex items-center">
-              <svg
-                className="w-5 h-5 mr-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v4a1 1 0 102 0V7zm-1 7a1 1 0 100-2 1 1 0 000 2z" />
               </svg>
               {message}

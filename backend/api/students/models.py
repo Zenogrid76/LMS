@@ -1,22 +1,20 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+from api.users.models import User  # import your custom User
+from django.utils import timezone
 
 class Students(models.Model):
-    studentid = models.AutoField(primary_key=True)
-    fullname = models.CharField(max_length=100)
-    email = models.CharField(unique=True, max_length=100)
-    password = models.CharField(max_length=255)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='student_profile')
+    first_name = models.CharField(max_length=50, blank=True, null=True)
+    last_name = models.CharField(max_length=50, blank=True, null=True)
     institution = models.CharField(max_length=100, blank=True, null=True)
     gradelevel = models.CharField(max_length=50, blank=True, null=True)
     dateofbirth = models.DateField(blank=True, null=True)
-    createdat = models.DateTimeField(blank=True, null=True)
-    updatedat = models.DateTimeField(blank=True, null=True)
+    contact = models.CharField(max_length=20, blank=True, null=True)
+    country = models.CharField(max_length=100, blank=True, null=True)
+    profile_photo = models.ImageField(upload_to='student_photos/', blank=True, null=True)
+    createdat = models.DateTimeField(auto_now_add=True , null=True, blank=True)
+    updatedat = models.DateTimeField(auto_now=True , null=True, blank=True)
+    profile_completed = models.BooleanField(default=False)
 
-   
+    def __str__(self):
+        return self.user.email

@@ -32,11 +32,11 @@ export function AuthProvider({ children }) {
     setIsAuthenticated(true);
   };
 
-  const logout = () => {
+  const logout = (navigate) => {
     localStorage.removeItem("access_token");
     setToken(null);
     setIsAuthenticated(false);
-    navigate("/login");
+     if (navigate) navigate("/"); // Redirect to home
   };
 
   // Optional: check token validity on mount

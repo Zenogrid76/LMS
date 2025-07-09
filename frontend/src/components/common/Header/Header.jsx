@@ -31,7 +31,7 @@ export default function Header() {
           {isAuthenticated ? (
             <button
               className="px-6 h-10 bg-[#E8F2F0] rounded-lg font-lexend font-bold text-[14px] text-[#0D1C17] shadow-sm hover:bg-[#d3ebe5] transition"
-              onClick={logout}
+              onClick={() => logout(navigate)}
             >
               Log Out
             </button>
