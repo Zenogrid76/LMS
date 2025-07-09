@@ -1,77 +1,65 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.parsers import MultiPartParser, FormParser
-from django.utils import timezone
-from django.db import transaction
-from django.contrib.auth.hashers import make_password
-from .models import User, MentorProfile, MentorSignupSession
-from .serializers import Step1Serializer, Step2Serializer, Step3Serializer
-import uuid
-from datetime import timedelta
+from rest_framework import viewsets, permissions,generics
+from api.mentors.models import MentorProfile, Education
+from .serializers import MentorProfileSerializer, EducationSerializer , MentorProfileStep2Serializer, MentorProfileStep1Serializer , MentorProfileStep3Serializer
 
-class MentorSignupSessionDetail(APIView):
-    def get(self, request, session_id):
-        try:
-            session = MentorSignupSession.objects.get(session_id=session_id)
-            return Response({'step1_data': session.step1_data})
-        except MentorSignupSession.DoesNotExist:
-            return Response({'error': 'Session not found'}, status=404)
+# api/mentors/views.py
+# This file contains the viewsets for mentor profiles and education management.
+class MentorProfileViewSet(viewsets.ModelViewSet):
+    queryset = MentorProfile.objects.all()
+    serializer_class = MentorProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-class MentorSignupSessionMixin:
-    def get_session(self, session_id):
-        try:
-            session = MentorSignupSession.objects.get(session_id=session_id)
-            if session.expires_at < timezone.now():
-                session.delete()
-                return None
-            return session
-        except MentorSignupSession.DoesNotExist:
-            return None
+    def get_queryset(self):
+        # Restrict to the current user's mentor profile (customize as needed)
+        user = self.request.user
+        return MentorProfile.objects.filter(user=user)
+    
 
-class Step1View(APIView, MentorSignupSessionMixin):
-    parser_classes = [MultiPartParser, FormParser]
+class EducationViewSet(viewsets.ModelViewSet):
+    serializer_class = EducationSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request):
-        session_id = request.data.get('session_id', uuid.uuid4())
-        session = MentorSignupSession.objects.update_or_create(
-            session_id=session_id,
-            defaults={'expires_at': timezone.now() + timedelta(hours=24)}
-        )[0]
+    def get_queryset(self):
+        # Restrict to the current user's mentor profile's educations
+        user = self.request.user
+        mentor_profile = MentorProfile.objects.filter(user=user).first()
+        if mentor_profile:
+            return Education.objects.filter(mentor=mentor_profile)
+        return Education.objects.none()
 
-        serializer = Step1Serializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def perform_create(self, serializer):
+        mentor_profile = MentorProfile.objects.get(user=self.request.user)
+        serializer.save(mentor=mentor_profile)
 
-        data = serializer.validated_data
-        session.step1_data = {
-            **data,
-            'password_hash': make_password(data['password'])
-        }
-        session.save()
+    def perform_update(self, serializer):
+        mentor_profile = MentorProfile.objects.get(user=self.request.user)
+        serializer.save(mentor=mentor_profile)
+
+    def perform_destroy(self, instance):
+        mentor_profile = MentorProfile.objects.get(user=self.request.user)
+        instance.delete()
         
-        return Response({'session_id': session_id}, status=status.HTTP_200_OK)
 
-class FinalizeSignupView(APIView, MentorSignupSessionMixin):
-    @transaction.atomic
-    def post(self, request):
-        session = self.get_session(request.data.get('session_id'))
-        if not session:
-            return Response({'error': 'Invalid session'}, status=status.HTTP_404_NOT_FOUND)
 
-        user = User.objects.create(
-            email=session.step1_data['email'],
-            password_hash=session.step1_data['password_hash'],
-            full_name=session.step1_data['name'],
-            role='mentor'
-        )
+class MentorApplicationStep1View(generics.RetrieveUpdateAPIView):
+    serializer_class = MentorProfileStep1Serializer
+    permission_classes = [permissions.IsAuthenticated]
 
-        MentorProfile.objects.create(
-            user=user,
-            **session.step1_data,
-            **session.step2_data,
-            **session.step3_data
-        )
+    def get_object(self):
+        profile, _ = MentorProfile.objects.get_or_create(user=self.request.user)
+        return profile
+class MentorApplicationStep2View(generics.RetrieveUpdateAPIView):
+    serializer_class = MentorProfileStep2Serializer
+    permission_classes = [permissions.IsAuthenticated]
 
-        session.delete()
-        return Response({'user_id': user.id}, status=status.HTTP_201_CREATED)
+    def get_object(self):
+        profile, _ = MentorProfile.objects.get_or_create(user=self.request.user)
+        return profile
+    
+class MentorApplicationStep3View(generics.RetrieveUpdateAPIView):
+    serializer_class = MentorProfileStep3Serializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        profile, _ = MentorProfile.objects.get_or_create(user=self.request.user)
+        return profile
