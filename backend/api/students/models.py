@@ -17,7 +17,6 @@ class Students(models.Model):
     gradelevel = models.CharField(max_length=50, blank=True, null=True)
     dateofbirth = models.DateField(blank=True, null=True)
     createdat = models.DateTimeField(blank=True, null=True)
+    updatedat = models.DateTimeField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'students'
+   

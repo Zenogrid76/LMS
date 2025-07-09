@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',  # Django REST Framework for API support
     'corsheaders',  # For handling CORS
     'django.contrib.sites',  # For flatpages and sites framework
+    'mentors',
+    'users',  # Custom user app
     
 ]
 

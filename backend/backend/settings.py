@@ -49,9 +49,13 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'api',
-
-
+    'api.mentors',
+    'api.users',
+    'api.students',
 ]
+AUTH_USER_MODEL = 'users.User'
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,6 +70,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
+# REST Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
